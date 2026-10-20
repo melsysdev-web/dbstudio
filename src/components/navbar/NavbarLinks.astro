@@ -1,0 +1,23 @@
+---
+const links = [
+  { label: "Inicio", href: "#inicio" },
+  { label: "Educación", href: "#educacion" },
+  { label: "Proyectos", href: "#proyectos" },
+  { label: "Contacto", href: "#contacto" },
+];
+---
+
+<nav aria-label="Navegación principal">
+  <ul class="flex items-center gap-5 xl:gap-7">
+    {links.map((link) => (
+      <li>
+        <a
+          href={link.href}
+          class="text-sm text-foreground/75 transition-colors duration-200 hover:text-secondary"
+        >
+          {link.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>

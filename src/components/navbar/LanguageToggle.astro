@@ -1,0 +1,22 @@
+---
+const currentPath = Astro.url.pathname;
+const isEnglish = /^\/en(?:\/|$)/.test(currentPath);
+const nextLanguage = isEnglish ? "es" : "en";
+
+const destination = currentPath.replace(
+  /^\/(?:es|en)(?=\/|$)/,
+  "",
+);
+
+const nextPath = `/${nextLanguage}${destination || "/"}`;
+---
+
+<a
+  href={`${nextPath}${Astro.url.search}${Astro.url.hash}`}
+  lang={nextLanguage}
+  aria-label={isEnglish ? "Cambiar a español" : "Switch to English"}
+  title={isEnglish ? "Cambiar a español" : "Switch to English"}
+  class="inline-flex h-10 min-w-10 shrink-0 items-center justify-center rounded-full border border-border/70 px-2.5 text-xs font-semibold tracking-wide text-foreground transition-colors hover:bg-surface-container"
+>
+  {isEnglish ? "ES" : "EN"}
+</a>

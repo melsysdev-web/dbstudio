@@ -1,0 +1,28 @@
+---
+import { Sun, Moon } from "@lucide/astro";
+---
+
+<button
+  id="theme-toggle"
+  type="button"
+  aria-label="Cambiar tema"
+  title="Cambiar tema"
+  class="inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-border/70 text-foreground transition-colors hover:bg-surface-container"
+>
+  <Sun size={18} class="hidden dark:block" />
+  <Moon size={18} class="block dark:hidden" />
+</button>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>("#theme-toggle");
+
+  button?.addEventListener("click", () => {
+    const isDark = document.documentElement.classList.toggle("dark");
+
+    try {
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    } catch {
+      // El cambio visual sigue funcionando sin almacenamiento.
+    }
+  });
+</script>

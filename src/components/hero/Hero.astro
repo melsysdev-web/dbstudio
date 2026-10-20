@@ -1,0 +1,81 @@
+
+---
+import { ArrowDownRight, ArrowUpRight, Sparkles } from "@lucide/astro";
+---
+
+<section
+  id="inicio"
+  class="relative isolate overflow-hidden bg-background px-6 pb-20 pt-32 text-foreground sm:px-10 sm:pb-28 sm:pt-40 lg:px-16 lg:pb-32 lg:pt-44"
+>
+  <!-- Decoración editorial -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -right-32 top-32 -z-10 size-80 rounded-full border border-border sm:size-[28rem]"
+  ></div>
+
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -right-16 top-48 -z-10 size-64 rounded-full border border-border sm:size-96"
+  ></div>
+
+  <div class="mx-auto max-w-7xl">
+    <!-- Etiqueta del estudio -->
+    <div
+      class="mb-8 flex items-center gap-3 text-xs font-medium uppercase tracking-[0.2em] text-on-surface-variant sm:mb-10"
+    >
+      <Sparkles size={16} strokeWidth={1.5} />
+      <span>Estudio digital independiente</span>
+    </div>
+
+    <!-- Título principal -->
+    <h1
+      class="max-w-5xl font-headline text-5xl font-normal leading-[1.02] tracking-[-0.035em] sm:text-7xl lg:text-8xl xl:text-[7.5rem]"
+    >
+      Diseñamos ideas.
+      <br />
+      <span class="italic text-secondary">Creamos</span>
+      experiencias
+      <br class="hidden sm:block" />
+      digitales.
+    </h1>
+
+    <!-- Descripción y acciones -->
+    <div
+      class="mt-10 flex flex-col gap-8 sm:mt-14 lg:flex-row lg:items-end lg:justify-between"
+    >
+      <p
+        class="max-w-lg font-body text-base leading-7 text-on-surface-variant sm:text-lg sm:leading-8"
+      >
+        Transformamos ideas en experiencias web modernas, funcionales y
+        memorables. Combinamos diseño, tecnología y estrategia para crear
+        productos digitales con propósito.
+      </p>
+
+      <div class="flex flex-wrap items-center gap-4">
+        <a
+          href="#proyectos"
+          class="inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-primary px-6 py-3 font-body text-sm font-medium text-primary-foreground transition-colors duration-300 hover:bg-secondary hover:text-secondary-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary"
+        >
+          Explorar proyectos
+          <ArrowDownRight size={18} />
+        </a>
+
+        <a
+          href="#contacto"
+          class="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-border px-6 py-3 font-body text-sm font-medium text-foreground transition-colors duration-300 hover:border-secondary hover:text-secondary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary"
+        >
+          Hablemos
+          <ArrowUpRight size={18} />
+        </a>
+      </div>
+    </div>
+
+    <!-- Línea editorial inferior -->
+    <div
+      class="mt-16 flex flex-col gap-3 border-t border-border pt-5 font-body text-xs uppercase tracking-[0.15em] text-on-surface-variant sm:mt-24 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <span>Diseño · Desarrollo · Tecnología</span>
+      <span>Ideas que toman forma.</span>
+    </div>
+  </div>
+</section>

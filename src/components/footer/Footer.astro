@@ -1,0 +1,92 @@
+---
+import { ArrowUpRight, ArrowUp, Heart } from "@lucide/astro";
+
+const currentYear = new Date().getFullYear();
+
+const links = [
+  { label: "Inicio", href: "#inicio" },
+  { label: "Sobre mí", href: "#sobre-mi" },
+  { label: "Educación", href: "#educacion" },
+  { label: "Proyectos", href: "#proyectos" },
+  { label: "Contacto", href: "#contacto" },
+];
+---
+
+<footer class="bg-primary text-on-primary">
+  <div class="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
+
+    <!-- Bloque principal -->
+    <div class="grid gap-12 py-16 md:grid-cols-2 md:items-end lg:py-20">
+
+      <div>
+        <a
+          href="#inicio"
+          class="inline-block font-headline text-4xl tracking-tight sm:text-5xl"
+          aria-label="DBStudio, volver al inicio"
+        >
+          DB<span class="text-secondary">.</span>Studio
+        </a>
+
+        <p class="mt-5 max-w-md text-sm leading-7 text-on-primary/70 sm:text-base">
+          Ideas con intención. Diseños con identidad.
+          Creando experiencias visuales que conectan personas e historias.
+        </p>
+      </div>
+
+      <div class="md:justify-self-end">
+        <p class="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-on-primary/60">
+          Navegación
+        </p>
+
+        <nav aria-label="Navegación del pie de página">
+          <ul class="flex flex-wrap gap-x-6 gap-y-4">
+            {links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="group inline-flex items-center gap-1 text-sm text-on-primary/80 transition-colors hover:text-secondary"
+                >
+                  {link.label}
+                  <ArrowUpRight
+                    size={13}
+                    class="opacity-0 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100"
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+
+    </div>
+
+    <!-- Línea divisoria -->
+    <div class="h-px bg-on-primary/15"></div>
+
+    <!-- Barra inferior -->
+    <div class="flex flex-col gap-5 py-6 sm:flex-row sm:items-center sm:justify-between">
+
+      <p class="text-xs text-on-primary/60">
+        © {currentYear} DBStudio. Todos los derechos reservados.
+      </p>
+
+      <p class="inline-flex items-center gap-1.5 text-xs text-on-primary/60">
+        Diseñado con
+        <Heart size={13} class="text-secondary" />
+        y dedicación.
+      </p>
+
+      <a
+        href="#inicio"
+        class="group inline-flex items-center gap-2 self-start text-xs text-on-primary/80 transition-colors hover:text-secondary sm:self-auto"
+      >
+        Volver arriba
+        <ArrowUp
+          size={15}
+          class="transition-transform group-hover:-translate-y-1"
+        />
+      </a>
+
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,44 @@
+
+---
+import ContactCard from "./ContactCard.astro";
+
+const contacts = [
+  {
+    icon: "mail",
+    title: "Correo electrónico",
+    description: "Para consultas, propuestas o nuevas oportunidades.",
+    action: "Escríbeme un correo",
+    href: "mailto:TU_CORREO@ejemplo.com",
+    external: false,
+  },
+  {
+    icon: "chat",
+    title: "WhatsApp",
+    description: "Hablemos directamente sobre tu próximo proyecto.",
+    action: "Enviar un mensaje",
+    href: "https://wa.me/TU_NUMERO",
+    external: true,
+  },
+  {
+    icon: "work",
+    title: "LinkedIn",
+    description: "Conectemos y compartamos ideas profesionales.",
+    action: "Visitar mi perfil",
+    href: "https://www.linkedin.com/in/TU_PERFIL/",
+    external: true,
+  },
+];
+---
+
+<div class="grid gap-4 md:grid-cols-3">
+  {contacts.map((contact) => (
+    <ContactCard
+      icon={contact.icon}
+      title={contact.title}
+      description={contact.description}
+      action={contact.action}
+      href={contact.href}
+      external={contact.external}
+    />
+  ))}
+</div>
