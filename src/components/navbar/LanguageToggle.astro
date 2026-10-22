@@ -1,22 +1,62 @@
 ---
-const currentPath = Astro.url.pathname;
-const isEnglish = /^\/en(?:\/|$)/.test(currentPath);
-const nextLanguage = isEnglish ? "es" : "en";
+const pathname = Astro.url.pathname;
+const isSpanish = /^\/es(?:\/|$)/.test(pathname);
+const nextLanguage = isSpanish ? "en" : "es";
 
-const destination = currentPath.replace(
-  /^\/(?:es|en)(?=\/|$)/,
-  "",
-);
+// Conserva la ruta de la página y elimina el prefijo de idioma actual.
+const destination = pathname.replace(/^\/(?:en|es)(?=\/|$)/, "") || "/";
+const nextPath = `/${nextLanguage}${destination === "/" ? "/" : destination}`;
 
-const nextPath = `/${nextLanguage}${destination || "/"}`;
+const label = isSpanish ? "EN" : "ES";
+const accessibleLabel = isSpanish ? "Switch to English" : "Cambiar a español";
 ---
 
 <a
   href={`${nextPath}${Astro.url.search}${Astro.url.hash}`}
+  class="language-toggle"
   lang={nextLanguage}
-  aria-label={isEnglish ? "Cambiar a español" : "Switch to English"}
-  title={isEnglish ? "Cambiar a español" : "Switch to English"}
-  class="inline-flex h-10 min-w-10 shrink-0 items-center justify-center rounded-full border border-border/70 px-2.5 text-xs font-semibold tracking-wide text-foreground transition-colors hover:bg-surface-container"
+  aria-label={accessibleLabel}
+  title={accessibleLabel}
 >
-  {isEnglish ? "ES" : "EN"}
+  <span class="language-toggle__globe" aria-hidden="true">◎</span>
+  <span>{label}</span>
 </a>
+
+<style>
+  .language-toggle {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-width: 44px;
+    height: 38px;
+    padding: 0 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    color: var(--color-foreground);
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      color 200ms ease,
+      background-color 200ms ease,
+      border-color 200ms ease;
+  }
+
+  .language-toggle:hover {
+    color: var(--color-primary);
+    background: color-mix(in srgb, var(--color-primary) 9%, transparent);
+    border-color: var(--color-primary);
+  }
+
+  .language-toggle__globe {
+    font-size: 17px;
+    line-height: 1;
+  }
+
+  .language-toggle:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+</style>

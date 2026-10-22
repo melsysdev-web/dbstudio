@@ -1,103 +1,395 @@
 ---
-import { Menu, X, ArrowUpRight } from "@lucide/astro";
+const isSpanish = Astro.url.pathname.startsWith("/es");
 
-const links = [
-  { label: "Inicio", href: "#inicio" },
-  { label: "Educación", href: "#educacion" },
-  { label: "Proyectos", href: "#proyectos" },
-  { label: "Contacto", href: "#contacto" },
-];
+const navItems = isSpanish
+  ? [
+      { label: "Inicio", href: "#inicio", number: "01" },
+      { label: "Proyectos", href: "#proyectos", number: "02" },
+      { label: "Servicios", href: "#servicios", number: "03" },
+      { label: "Contacto", href: "#contacto", number: "04" },
+    ]
+  : [
+      { label: "Home", href: "#inicio", number: "01" },
+      { label: "Projects", href: "#proyectos", number: "02" },
+      { label: "Services", href: "#servicios", number: "03" },
+      { label: "Contact", href: "#contacto", number: "04" },
+    ];
 ---
 
-<div class="relative">
-  <button
-    id="mobile-menu-toggle"
-    type="button"
-    aria-label="Abrir menú"
+<div class="mobile-nav lg:hidden">
+  <input
+    id="mobile-nav-checkbox"
+    class="mobile-nav__checkbox"
+    type="checkbox"
+    aria-label={isSpanish ? "Abrir menú" : "Open menu"}
+    aria-controls="mobile-nav-panel"
     aria-expanded="false"
-    aria-controls="mobile-menu"
-    class="inline-flex size-10 items-center justify-center rounded-full border border-border/70 text-foreground transition-colors hover:bg-surface-container"
+  />
+
+  <label
+    for="mobile-nav-checkbox"
+    class="mobile-nav__toggle"
+    aria-hidden="true"
   >
-    <Menu size={20} class="menu-open-icon" />
-    <X size={20} class="menu-close-icon hidden" />
-  </button>
+    <span class="mobile-nav__bar mobile-nav__bar--1"></span>
+    <span class="mobile-nav__bar mobile-nav__bar--2"></span>
+    <span class="mobile-nav__bar mobile-nav__bar--3"></span>
+  </label>
 
   <nav
-    id="mobile-menu"
-    aria-label="Navegación móvil"
-    class="absolute right-0 top-14 hidden w-[min(20rem,calc(100vw-2rem))] rounded-2xl border border-border/70 bg-background p-5 shadow-glass"
+    id="mobile-nav-panel"
+    class="mobile-nav__panel bg-surface"
+    aria-label={isSpanish ? "Navegación principal" : "Main navigation"}
+    inert
   >
-    <ul class="flex flex-col">
-      {links.map((link) => (
+
+    <ul class="mobile-nav__list">
+      {navItems.map((item, index) => (
         <li>
           <a
-            href={link.href}
-            class="flex items-center justify-between border-b border-border/50 py-4 text-sm text-foreground transition-colors hover:text-secondary"
+            href={item.href}
+            class="mobile-nav__link"
+            style={`--item-index: ${index}`}
           >
-            {link.label}
-            <ArrowUpRight size={15} />
+            <span class="mobile-nav__number">{item.number}</span>
+            <span class="mobile-nav__label">{item.label}</span>
+            <span class="mobile-nav__arrow" aria-hidden="true">↗</span>
           </a>
         </li>
       ))}
     </ul>
 
-    <a
-      href="#contacto"
-      class="mt-5 flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-secondary"
-    >
-      Hablemos
-      <ArrowUpRight size={16} />
-    </a>
   </nav>
 </div>
 
+<style>
+  .mobile-nav {
+    position: relative;
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+  }
+
+  /* Botón hamburguesa */
+  .mobile-nav__checkbox {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .mobile-nav__toggle {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    width: 44px;
+    height: 44px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    transition:
+      background-color 250ms ease,
+      border-color 250ms ease,
+      transform 250ms ease;
+  }
+
+  .mobile-nav__toggle:hover {
+    border-color: var(--color-primary);
+    background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+  }
+
+  .mobile-nav__checkbox:focus-visible + .mobile-nav__toggle {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+  }
+
+  .mobile-nav__bar {
+    display: block;
+    width: 18px;
+    height: 1.5px;
+    border-radius: 2px;
+    background: var(--color-foreground);
+    transition:
+      transform 300ms cubic-bezier(.2, .8, .2, 1),
+      width 300ms ease,
+      opacity 180ms ease;
+  }
+
+  .mobile-nav__bar--1 {
+    width: 13px;
+    transform: translateX(2.5px);
+  }
+
+  .mobile-nav__bar--2 {
+    width: 18px;
+  }
+
+  .mobile-nav__bar--3 {
+    width: 13px;
+    transform: translateX(-2.5px);
+  }
+
+  .mobile-nav__checkbox:checked + .mobile-nav__toggle .mobile-nav__bar {
+    position: absolute;
+    width: 18px;
+  }
+
+  .mobile-nav__checkbox:checked + .mobile-nav__toggle .mobile-nav__bar--1 {
+    transform: rotate(45deg);
+  }
+
+  .mobile-nav__checkbox:checked + .mobile-nav__toggle .mobile-nav__bar--2 {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+
+  .mobile-nav__checkbox:checked + .mobile-nav__toggle .mobile-nav__bar--3 {
+    transform: rotate(-45deg);
+  }
+
+  /* Panel desplegable */
+  .mobile-nav__panel {
+    position: absolute;
+    top: calc(100% + 14px);
+    right: 0;
+    z-index: 60;
+    width: min(86vw, 340px);
+    padding: 18px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: 22px;
+    box-shadow:
+      0 24px 60px rgb(0 0 0 / 12%),
+      0 3px 12px rgb(0 0 0 / 4%);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-10px) scale(.98);
+    transform-origin: top right;
+    transition:
+      opacity 220ms ease,
+      transform 280ms cubic-bezier(.2, .8, .2, 1),
+      visibility 220ms ease;
+  }
+
+  .mobile-nav__checkbox:checked ~ .mobile-nav__panel {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Encabezado */
+  .mobile-nav__heading {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px 8px 18px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .mobile-nav__eyebrow {
+    color: var(--color-primary);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .2em;
+  }
+
+  .mobile-nav__subtitle {
+    margin: 0;
+    color: var(--color-foreground);
+    font-size: 13px;
+    opacity: .65;
+  }
+
+  /* Enlaces */
+  .mobile-nav__list {
+    display: grid;
+    gap: 5px;
+    margin: 12px 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mobile-nav__link {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr) 24px;
+    align-items: center;
+    gap: 8px;
+    min-height: 52px;
+    padding: 10px 12px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    color: var(--color-foreground);
+    text-decoration: none;
+    transition:
+      background-color 200ms ease,
+      border-color 200ms ease,
+      transform 200ms ease;
+    animation: mobile-nav-enter 350ms both;
+    animation-delay: calc(var(--item-index, 0) * 45ms);
+  }
+
+  .mobile-nav__link:hover {
+    border-color: var(--color-border);
+    background: color-mix(in srgb, var(--color-primary) 7%, transparent);
+    transform: translateX(2px);
+  }
+
+  .mobile-nav__number {
+    color: var(--color-primary);
+    font-size: 10px;
+    font-variant-numeric: tabular-nums;
+    opacity: .7;
+  }
+
+  .mobile-nav__label {
+    min-width: 0;
+    font-family: var(--font-headline, Georgia, serif);
+    font-size: 21px;
+    line-height: 1.2;
+  }
+
+  .mobile-nav__arrow {
+    justify-self: end;
+    color: var(--color-foreground);
+    font-size: 17px;
+    opacity: .45;
+    transition:
+      opacity 200ms ease,
+      transform 200ms ease;
+  }
+
+  .mobile-nav__link:hover .mobile-nav__arrow {
+    opacity: 1;
+    transform: translate(2px, -2px);
+  }
+
+  /* Pie discreto */
+  .mobile-nav__footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 8px 3px;
+    color: var(--color-foreground);
+    font-size: 10px;
+    letter-spacing: .04em;
+    opacity: .6;
+  }
+
+  .mobile-nav__footer-line {
+    width: 22px;
+    height: 1px;
+    flex: 0 0 auto;
+    background: var(--color-primary);
+  }
+
+  @keyframes mobile-nav-enter {
+    from {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 360px) {
+    .mobile-nav__panel {
+      width: min(88vw, 320px);
+      padding: 14px;
+    }
+
+    .mobile-nav__label {
+      font-size: 19px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-nav__toggle,
+    .mobile-nav__bar,
+    .mobile-nav__panel,
+    .mobile-nav__link,
+    .mobile-nav__arrow {
+      animation: none;
+      transition: none;
+    }
+  }
+</style>
+
 <script>
-  const toggle = document.querySelector<HTMLButtonElement>(
-    "#mobile-menu-toggle",
-  );
-  const menu = document.querySelector<HTMLElement>("#mobile-menu");
-  const openIcon = document.querySelector<HTMLElement>(".menu-open-icon");
-  const closeIcon = document.querySelector<HTMLElement>(".menu-close-icon");
+  const mobileNav = document.querySelector(".mobile-nav");
 
-  if (toggle && menu && openIcon && closeIcon) {
-    const closeMenu = () => {
-      menu.classList.add("hidden");
-      openIcon.classList.remove("hidden");
-      closeIcon.classList.add("hidden");
-      toggle.setAttribute("aria-expanded", "false");
-      toggle.setAttribute("aria-label", "Abrir menú");
-    };
+  if (mobileNav) {
+    const checkbox = mobileNav.querySelector<HTMLInputElement>(
+      "#mobile-nav-checkbox",
+    );
+    const panel = mobileNav.querySelector<HTMLElement>(
+      "#mobile-nav-panel",
+    );
 
-    toggle.addEventListener("click", () => {
-      const isOpening = menu.classList.contains("hidden");
+    if (checkbox && panel) {
+      const updateMenu = () => {
+        checkbox.setAttribute("aria-expanded", String(checkbox.checked));
 
-      menu.classList.toggle("hidden", !isOpening);
-      openIcon.classList.toggle("hidden", isOpening);
-      closeIcon.classList.toggle("hidden", !isOpening);
+        checkbox.setAttribute(
+          "aria-label",
+          checkbox.checked
+            ? (document.documentElement.lang === "es"
+                ? "Cerrar menú"
+                : "Close menu")
+            : (document.documentElement.lang === "es"
+                ? "Abrir menú"
+                : "Open menu"),
+        );
 
-      toggle.setAttribute("aria-expanded", String(isOpening));
-      toggle.setAttribute(
-        "aria-label",
-        isOpening ? "Cerrar menú" : "Abrir menú",
-      );
-    });
+        panel.inert = !checkbox.checked;
+      };
 
-    menu.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", closeMenu);
-    });
+      checkbox.addEventListener("change", updateMenu);
 
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") closeMenu();
-    });
+      panel.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          checkbox.checked = false;
+          updateMenu();
+        });
+      });
 
-    document.addEventListener("click", (event) => {
-      if (
-        event.target instanceof Node &&
-        !toggle.contains(event.target) &&
-        !menu.contains(event.target)
-      ) {
-        closeMenu();
-      }
-    });
+      document.addEventListener("click", (event) => {
+        if (
+          event.target instanceof Node &&
+          !mobileNav.contains(event.target) &&
+          checkbox.checked
+        ) {
+          checkbox.checked = false;
+          updateMenu();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && checkbox.checked) {
+          checkbox.checked = false;
+          updateMenu();
+          checkbox.focus();
+        }
+      });
+
+      document.addEventListener("astro:after-swap", () => {
+        checkbox.checked = false;
+        updateMenu();
+      });
+
+      updateMenu();
+    }
   }
 </script>
