@@ -337,3 +337,268 @@ img {
     scroll-behavior: auto !important;
   }
 }
+
+/* Theme Toggle — DBStudio */
+
+.theme-switch {
+  --switch-width: 54px;
+  --switch-height: 30px;
+  --switch-thumb: 22px;
+
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: var(--switch-width);
+  height: var(--switch-height);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.theme-switch__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.theme-switch__track {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 999px;
+  background: #87ceeb;
+  transition:
+    background-color 400ms ease,
+    border-color 400ms ease;
+}
+
+.theme-switch__thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  display: grid;
+  width: var(--switch-thumb);
+  height: var(--switch-thumb);
+  place-items: center;
+  border-radius: 50%;
+  background: #ffdb55;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 18%);
+  transition:
+    transform 400ms cubic-bezier(.2, .8, .2, 1),
+    background-color 400ms ease;
+}
+
+.theme-switch__sun {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff6bf;
+  box-shadow: 0 0 0 3px rgb(255 255 255 / 25%);
+}
+
+.theme-switch__moon {
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  fill: #aeb9cc;
+  opacity: 0;
+  transform: rotate(-25deg);
+  transition: opacity 300ms ease;
+}
+
+.theme-switch__clouds {
+  position: absolute;
+  inset: 0;
+  transition: opacity 300ms ease, transform 400ms ease;
+}
+
+.theme-switch__cloud {
+  position: absolute;
+  width: 17px;
+  height: 7px;
+  border-radius: 999px;
+  background: #fff;
+}
+
+.theme-switch__cloud::before,
+.theme-switch__cloud::after {
+  position: absolute;
+  bottom: 2px;
+  content: "";
+  border-radius: 50%;
+  background: inherit;
+}
+
+.theme-switch__cloud::before {
+  left: 3px;
+  width: 8px;
+  height: 8px;
+}
+
+.theme-switch__cloud::after {
+  right: 2px;
+  width: 6px;
+  height: 6px;
+}
+
+.theme-switch__cloud--1 {
+  right: 4px;
+  bottom: 5px;
+}
+
+.theme-switch__cloud--2 {
+  right: 17px;
+  bottom: 1px;
+  transform: scale(.65);
+}
+
+.theme-switch__stars {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 300ms ease, transform 400ms ease;
+}
+
+.theme-switch__star {
+  position: absolute;
+  color: #fff;
+  font-size: 9px;
+  line-height: 1;
+  animation: theme-star-twinkle 2s ease-in-out infinite;
+}
+
+.theme-switch__star--1 {
+  top: 4px;
+  left: 6px;
+}
+
+.theme-switch__star--2 {
+  top: 16px;
+  left: 13px;
+  font-size: 6px;
+  animation-delay: .5s;
+}
+
+.theme-switch__star--3 {
+  top: 7px;
+  left: 23px;
+  font-size: 5px;
+  animation-delay: .9s;
+}
+
+.theme-switch__star--4 {
+  top: 17px;
+  left: 5px;
+  font-size: 5px;
+  animation-delay: 1.2s;
+}
+
+/* Modo oscuro */
+
+.theme-switch__input:checked + .theme-switch__track {
+  border-color: #3c4659;
+  background: #182238;
+}
+
+.theme-switch__input:checked + .theme-switch__track .theme-switch__thumb {
+  transform: translateX(24px);
+  background: #e7ecf7;
+}
+
+.theme-switch__input:checked + .theme-switch__track .theme-switch__sun {
+  opacity: 0;
+}
+
+.theme-switch__input:checked + .theme-switch__track .theme-switch__moon {
+  opacity: 1;
+}
+
+.theme-switch__input:checked + .theme-switch__track .theme-switch__clouds {
+  opacity: 0;
+  transform: translateX(10px);
+}
+
+.theme-switch__input:checked + .theme-switch__track .theme-switch__stars {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Accesibilidad */
+
+.theme-switch__input:focus-visible + .theme-switch__track {
+  outline: 2px solid var(--color-primary, #10b981);
+  outline-offset: 3px;
+}
+
+@keyframes theme-star-twinkle {
+  0%, 100% {
+    opacity: .65;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-switch *,
+  .theme-switch *::before,
+  .theme-switch *::after {
+    animation: none !important;
+    transition-duration: .01ms !important;
+  }
+}
+/* DBStudio — Responsive Brand */
+
+.navbar-brand {
+  max-width: 100%;
+  text-decoration: none;
+}
+
+.navbar-brand__logo {
+  width: 48px;
+  height: auto;
+}
+
+.navbar-brand__text {
+  flex: 1 1 auto;
+}
+
+.navbar-brand__specialty {
+  max-width: 100%;
+}
+
+@media (max-width: 380px) {
+  .navbar-brand {
+    gap: 6px;
+  }
+
+  .navbar-brand__logo {
+    width: 36px;
+  }
+
+  .navbar-brand__specialty {
+    font-size: 8px;
+    letter-spacing: .04em;
+  }
+
+  .navbar-brand__text {
+    gap: 3px;
+  }
+}
+
+@media (min-width: 640px) {
+  .navbar-brand__logo {
+    width: 56px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .navbar-brand__logo {
+    width: 64px;
+  }
+}

@@ -1,0 +1,52 @@
+---
+import ProjectCard from "./ProjectCard.astro";
+
+const projects = [
+  {
+    number: "01",
+    title: "Proyecto editorial",
+    category: "Diseño visual",
+    year: "2026",
+    image: "/images/projects/project-01.webp",
+    alt: "Imagen principal del proyecto editorial",
+    layout: "md:col-span-7",
+    imageHeight: "h-72 sm:h-96 lg:h-[460px]",
+  },
+  {
+    number: "02",
+    title: "Espacios con identidad",
+    category: "Interiorismo",
+    year: "2026",
+    image: "/images/projects/project-02.webp",
+    alt: "Fotografía de un espacio interior diseñado",
+    layout: "md:col-span-5 md:mt-32",
+    imageHeight: "h-72 sm:h-96 lg:h-[360px]",
+  },
+  {
+    number: "03",
+    title: "Detalles que cuentan",
+    category: "Dirección de arte",
+    year: "2025",
+    image: "/images/projects/project-03.webp",
+    alt: "Composición visual de un proyecto creativo",
+    layout: "md:col-span-5",
+    imageHeight: "h-72 sm:h-96 lg:h-[360px]",
+  },
+  {
+    number: "04",
+    title: "Una nueva perspectiva",
+    category: "Proyecto personal",
+    year: "2025",
+    image: "/images/projects/project-04.webp",
+    alt: "Imagen de un proyecto personal",
+    layout: "md:col-span-7 md:mt-24",
+    imageHeight: "h-72 sm:h-96 lg:h-[460px]",
+  },
+];
+---
+
+<div class="grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-12 md:gap-y-20">
+  {projects.map((project) => (
+    <ProjectCard project={project} />
+  ))}
+</div>

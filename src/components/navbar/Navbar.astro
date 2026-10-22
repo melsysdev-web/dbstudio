@@ -1,5 +1,4 @@
 ---
-import { ArrowUpRight } from "@lucide/astro";
 import NavbarBrand from "./NavbarBrand.astro";
 import NavbarLinks from "./NavbarLinks.astro";
 import NavbarMobile from "./NavbarMobile.astro";
@@ -7,28 +6,35 @@ import ThemeToggle from "./ThemeToggle.astro";
 import LanguageToggle from "./LanguageToggle.astro";
 ---
 
-<header class="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6">
-  <div class="bg-glass-panel mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-2xl border border-border/70 px-4 py-3 shadow-glass sm:gap-5 sm:px-7">
-    <NavbarBrand />
-
-    <div class="hidden lg:block">
-      <NavbarLinks />
+<header class="fixed inset-x-0 top-0 z-50 px-2 pt-2 sm:px-5 sm:pt-4">
+  <div
+    class="bg-glass-panel mx-auto flex w-full max-w-7xl items-center justify-between gap-2 rounded-xl border border-border/70 px-3 py-2.5 sm:gap-5 sm:rounded-2xl sm:px-6 sm:py-3 lg:px-7"
+  >
+    <!-- Marca -->
+    <div class="min-w-0 flex-1 lg:flex-none">
+      <NavbarBrand
+        studio="DBStudio"
+        architect="Daniela Benavides"
+        specialty="Arquitectura y Diseño"
+      />
     </div>
 
+    <!-- Navegación de escritorio -->
+    <nav
+      class="hidden min-w-0 flex-1 justify-center lg:flex"
+      aria-label="Navegación principal"
+    >
+      <NavbarLinks />
+    </nav>
+
+    <!-- Acciones de escritorio -->
     <div class="hidden shrink-0 items-center gap-3 lg:flex">
       <LanguageToggle />
       <ThemeToggle />
-
-      <a
-        href="#contacto"
-        class="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-all duration-300 hover:bg-secondary"
-      >
-        Hablemos
-        <ArrowUpRight size={16} strokeWidth={1.8} />
-      </a>
     </div>
 
-    <div class="flex shrink-0 items-center gap-1 lg:hidden">
+    <!-- Controles móviles -->
+    <div class="flex shrink-0 items-center gap-1.5 lg:hidden">
       <LanguageToggle />
       <ThemeToggle />
       <NavbarMobile />
